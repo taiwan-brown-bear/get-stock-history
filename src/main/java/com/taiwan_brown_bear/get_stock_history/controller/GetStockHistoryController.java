@@ -38,7 +38,7 @@ public class GetStockHistoryController {
             response = nasdaqApiService.getHistorialQuoteDataForStock(stockTicker, fromDate, toDate);
         }
 
-        return ResponseEntity.ofNullable(FormatUtils.prettyPrintJsonString(response));
+        return ResponseEntity.ofNullable(FormatUtils.beautify_json_string(response));
     }
 
 }

@@ -1,10 +1,18 @@
+version: "3.8"
+
 services:
   mysql:
     image: 'mysql:latest'
+    container_name: 'get-stock-history-mysql-container'
     environment:
       - 'MYSQL_DATABASE=mydatabase'
       - 'MYSQL_PASSWORD=secret'
       - 'MYSQL_ROOT_PASSWORD=verysecret'
       - 'MYSQL_USER=myuser'
     ports:
-      - '3306'
+      - '3307:3306'
+    volumes:
+      - get-stock-history-mysql-data:/var/lib/get_stock_history_mysql
+
+volumes:
+  get-stock-history-mysql-data:
