@@ -62,14 +62,14 @@ public class FormatUtils {
             stockHistory.add(String.join(",  ",
                     padSpaceToTheLeft(convert_from_MM_slash_dd_slash_yyyy_to_yyyyMMdd(row.date)),
                     padSpaceToTheLeft(row.close),
-                    padSpaceToTheLeft(row.volume),
+                    padSpaceToTheLeft(row.volume.replaceAll(",", "")),
                     padSpaceToTheRight(row.myopen),
                     padSpaceToTheRight(row.high),
                     padSpaceToTheRight(row.low)
                     // TODO: so far, I only care about date and close price and, perhaps, vol ...
             ));
         }
-        return GetStockHistoryResponseDTO.builder().stockHistoryCsvList(stockHistory).build();
+        return GetStockHistoryResponseDTO.builder().stockHistoryCsv_date_close_vol_open_high_low(stockHistory).build();
     }
 
     public static String padSpaceToTheRight(String originalString){

@@ -9,5 +9,5 @@ import java.util.List;
 @Data
 @Builder(toBuilder = true)
 public class GetStockHistoryResponseDTO {
-    private List<String> stockHistoryCsvList;
+    private List<String> stockHistoryCsv_date_close_vol_open_high_low;
 }
