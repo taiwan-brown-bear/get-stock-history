@@ -1,11 +1,6 @@
 package com.taiwan_brown_bear.get_stock_history.dao;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +12,7 @@ import java.time.Instant;
 @Data
 @Builder(toBuilder = true)
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name = "stock_history")
+@Table(name = "stock_history", uniqueConstraints = { @UniqueConstraint(name = "StockTickerAndDate", columnNames = { "stockTicker", "date" }) })
 public class StockHistoryDAO {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

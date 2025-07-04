@@ -32,11 +32,12 @@ public class GetStockHistoryController {
         boolean isFoundInDb = false;
         GetStockHistoryResponseDTO getStockHistoryResponseDTO = null;
         // TODO: check the db
-
+        // TODO: if start date and end date for the this ticker already there ...
+        // TODO: means in db already ... and set isFoundDb to be true.
 
         // TODO: if not found, call the 3rd party API
         if(isFoundInDb){
-
+            return ResponseEntity.ok(getStockHistoryResponseDTO);
         } else {
             try {
                 log.info("going to get the history data of \"{}\" between \"{}\" and \"{}\" by 3rd party api, \"{}\"", stockTicker, fromDate, toDate, source);
