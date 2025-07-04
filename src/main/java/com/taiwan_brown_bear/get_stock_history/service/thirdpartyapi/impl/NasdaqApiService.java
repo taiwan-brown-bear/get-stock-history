@@ -1,13 +1,14 @@
-package com.taiwan_brown_bear.get_stock_history.service.impl;
+package com.taiwan_brown_bear.get_stock_history.service.thirdpartyapi.impl;
 
 import com.taiwan_brown_bear.get_stock_history.dto.GetStockHistoryResponseDTO;
 import com.taiwan_brown_bear.get_stock_history.dto.NasdaqApiResponseDTO;
+import com.taiwan_brown_bear.get_stock_history.service.thirdpartyapi.ThirdPartyApiService;
 import com.taiwan_brown_bear.get_stock_history.util.FormatUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 @Service
-public class NasdaqApiService {
+public class NasdaqApiService implements ThirdPartyApiService {
 
     private final RestClient restClient;
 
@@ -28,7 +29,8 @@ public class NasdaqApiService {
                 .retrieve()
                 .body(NasdaqApiResponseDTO.class);
 
-        return FormatUtils.from(nasdaqApiResponseDTO);
+        GetStockHistoryResponseDTO getStockHistoryResponseDTO = FormatUtils.from(nasdaqApiResponseDTO);
+        return getStockHistoryResponseDTO;
     }
 
 }

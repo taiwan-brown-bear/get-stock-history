@@ -2,6 +2,7 @@ package com.taiwan_brown_bear.get_stock_history.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.taiwan_brown_bear.get_stock_history.dao.StockHistoryDAO;
 import com.taiwan_brown_bear.get_stock_history.dto.GetStockHistoryResponseDTO;
 import com.taiwan_brown_bear.get_stock_history.dto.NasdaqApiResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -60,16 +61,41 @@ public class FormatUtils {
         List<String> stockHistory = new ArrayList<>();
         for(NasdaqApiResponseDTO.Row row : nasdaqApiResponseDTO.data.tradesTable.rows){
             stockHistory.add(String.join(",  ",
+                    padSpaceToTheLeft(nasdaqApiResponseDTO.data.symbol),
                     padSpaceToTheLeft(convert_from_MM_slash_dd_slash_yyyy_to_yyyyMMdd(row.date)),
                     padSpaceToTheLeft(row.close),
                     padSpaceToTheLeft(row.volume.replaceAll(",", "")),
                     padSpaceToTheRight(row.myopen),
                     padSpaceToTheRight(row.high),
                     padSpaceToTheRight(row.low)
-                    // TODO: so far, I only care about date and close price and, perhaps, vol ...
             ));
         }
-        return GetStockHistoryResponseDTO.builder().stockHistoryCsv_date_close_vol_open_high_low(stockHistory).build();
+        return GetStockHistoryResponseDTO.builder().stockHistoryCsv_ticker_date_close_vol_open_high_low(stockHistory).build();
+    }
+
+    public static List<StockHistoryDAO> convert(GetStockHistoryResponseDTO getStockHistoryResponseDTO) {
+        List<StockHistoryDAO> ret = new ArrayList<>();
+        for (String rowInCsv : getStockHistoryResponseDTO.getStockHistoryCsv_ticker_date_close_vol_open_high_low()) {
+            String[] date_close_vol_open_high_low = rowInCsv.split(",");
+            String ticker = date_close_vol_open_high_low[0].trim();
+            String date   = date_close_vol_open_high_low[1].trim();
+            String close  = date_close_vol_open_high_low[2].trim();
+            String vol    = date_close_vol_open_high_low[3].trim();
+            String open   = date_close_vol_open_high_low[4].trim();
+            String high   = date_close_vol_open_high_low[5].trim();
+            String low    = date_close_vol_open_high_low[6].trim();
+            StockHistoryDAO stockHistoryDAO = StockHistoryDAO.builder()
+                    .stockTicker(ticker)
+                    .date       (date)
+                    .close      (Double.parseDouble(close))
+                    .volume     (Double.parseDouble(vol  ))
+                    .open       (Double.parseDouble(open ))
+                    .high       (Double.parseDouble(high ))
+                    .low        (Double.parseDouble(low  ))
+                    .build();
+            ret.add(stockHistoryDAO);
+        }
+        return ret;
     }
 
     public static String padSpaceToTheRight(String originalString){
@@ -85,4 +111,5 @@ public class FormatUtils {
         String paddedLeft = String.format("%" + fixedLength + "s", originalString);
         return paddedLeft;
     }
+
 }

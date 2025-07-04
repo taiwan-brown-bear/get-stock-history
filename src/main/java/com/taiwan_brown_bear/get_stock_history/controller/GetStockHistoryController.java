@@ -2,21 +2,21 @@ package com.taiwan_brown_bear.get_stock_history.controller;
 
 import com.taiwan_brown_bear.get_stock_history.dto.GetStockHistoryRequestDTO;
 import com.taiwan_brown_bear.get_stock_history.dto.GetStockHistoryResponseDTO;
-import com.taiwan_brown_bear.get_stock_history.service.impl.NasdaqApiService;
-import com.taiwan_brown_bear.get_stock_history.util.FormatUtils;
+import com.taiwan_brown_bear.get_stock_history.service.GetStockHistoryService;
+import com.taiwan_brown_bear.get_stock_history.service.thirdpartyapi.impl.NasdaqApiService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 @RestController
 @RequestMapping("/get/stock-history")
 public class GetStockHistoryController {
+
+    @Autowired
+    private GetStockHistoryService getStockHistoryService;
 
     @Autowired
     private NasdaqApiService nasdaqApiService;
@@ -47,6 +47,7 @@ public class GetStockHistoryController {
                     log.warn("Unsupported source, {}. Will use \"nasdaq.com\" as source.");
                     getStockHistoryResponseDTO = nasdaqApiService.getHistorialQuoteDataForStock(stockTicker, fromDate, toDate);
                 }
+                getStockHistoryService.save(getStockHistoryResponseDTO);
             } catch (Exception e) {
                 log.error("Failed to make the 3rd party call: {}", source, e);
                 return ResponseEntity.ofNullable(getStockHistoryResponseDTO);
