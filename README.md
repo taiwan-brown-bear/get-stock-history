@@ -1,6 +1,6 @@
 # Avaiable APIs:
 
-request #1:
+    request #1:
 
     curl --location --request GET 'http://localhost:8080/get/stock-history' \
     --header 'Content-Type: application/json' \
@@ -11,7 +11,7 @@ request #1:
         "source"     : "nasdap.com"
     }'
 
-response #1:
+    response #1:
 
     {
         "stockHistoryCsv_ticker_date_close_vol_open_high_low": [
