@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 
-public class NasdaqApiResponseDTO {
+public class NasdaqApiResponseDTO {// TODO: Note: Computer Generated Code. I just renamed it and put the rest as static inner class here ...
     //
     // Note: use (online tool)         https://json2csharp.com/code-converters/json-to-pojo
     //       and (nasdaq.com response) https://taiwan-brown-bear.atlassian.net/wiki/spaces/~712020271ff02da58c4d98be1a8bde29b377b6/pages/19431572/Public+get-stock-history+for+the+first+2+APIs

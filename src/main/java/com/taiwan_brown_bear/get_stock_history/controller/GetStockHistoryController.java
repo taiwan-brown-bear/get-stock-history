@@ -34,29 +34,25 @@ public class GetStockHistoryController {
         final String toDate      = getStockHistoryRequestDTO.getToDate();
 
         GetStockHistoryResponseDTO getStockHistoryResponseDTO = null;
-
-        // TODO: finish this one ... and, then, ...
-        //       work on sweet spot and, then,
-        //       back to here to working spring scheduler and spring batch ...
-        //       then, put to resume.
         String note = null;
+
         List<StockHistoryDAO> stockHistoryBetweenFromDateAdnToDate  = getStockHistoryService.find(fromDate, toDate, stockTicker);
         if(source == null && stockHistoryBetweenFromDateAdnToDate.size() > 2) {// TODO: Note: for the case where fromDate and toDate is one day away or the same date, will not check db here ...
             note = "found in database";
             getStockHistoryResponseDTO = FormatUtils.from(stockHistoryBetweenFromDateAdnToDate);
-        } else {// if not found, call the 3rd party API to grab it ...
+        } else {// else (not found): call the 3rd party API to grab it instead ...
             try {
                 log.info("going to get the history data of \"{}\" between \"{}\" and \"{}\" by 3rd party api, \"{}\"", stockTicker, fromDate, toDate, source);
                 if ("nasdaq.com".equalsIgnoreCase(source)) {
                     getStockHistoryResponseDTO = nasdaqApiService.getHistorialQuoteDataForStock(stockTicker, fromDate, toDate);
                     note = "calling nasdap.com";
-                }// TODO: add else if later. In the future, might try to add more sources ...
+                }// TODO: add else if later. In the future, might try to add more sources (e.g., wsj.com)
                 else {
                     log.warn("Unsupported source, {}. Will use \"nasdaq.com\" as source.");
                     getStockHistoryResponseDTO = nasdaqApiService.getHistorialQuoteDataForStock(stockTicker, fromDate, toDate);
                     note = "calling nasdap.com";
                 }
-                getStockHistoryService.save(getStockHistoryResponseDTO);// TODO: async call option ... data batch ???
+                getStockHistoryService.save(getStockHistoryResponseDTO);// TODO: try to convert it async call option ... and scheduler / data batch ???
             } catch (Throwable t) {
                 log.error("Failed to make the 3rd party call: {}", source, t);
                 note = "failed to get it from 3rd party call (" + fromDate + ", " + toDate + ")";

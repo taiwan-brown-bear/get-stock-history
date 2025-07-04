@@ -141,5 +141,4 @@ public class FormatUtils {
         String paddedLeft = String.format("%" + fixedLength + "s", originalString);
         return paddedLeft;
     }
-
 }
