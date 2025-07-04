@@ -2,13 +2,17 @@ package com.taiwan_brown_bear.get_stock_history.dao;
 
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 @Data
 @Builder(toBuilder = true)
 @Entity // This tells Hibernate to make a table out of this class

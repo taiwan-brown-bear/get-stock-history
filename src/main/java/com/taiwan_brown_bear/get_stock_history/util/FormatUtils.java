@@ -57,23 +57,53 @@ public class FormatUtils {
         return json_string;
     }
 
+    private static String toCsvRow(String symbol, String date, String close, String vol, String open, String high, String low) {
+        return String.join(",  ",
+                padSpaceToTheLeft(symbol),
+                padSpaceToTheLeft(date),
+                padSpaceToTheLeft(close),
+                padSpaceToTheLeft(vol),
+                padSpaceToTheRight(open),
+                padSpaceToTheRight(high),
+                padSpaceToTheRight(low)
+        );
+    }
+
     public static GetStockHistoryResponseDTO from(NasdaqApiResponseDTO nasdaqApiResponseDTO){
         List<String> stockHistory = new ArrayList<>();
         for(NasdaqApiResponseDTO.Row row : nasdaqApiResponseDTO.data.tradesTable.rows){
-            stockHistory.add(String.join(",  ",
-                    padSpaceToTheLeft(nasdaqApiResponseDTO.data.symbol),
-                    padSpaceToTheLeft(convert_from_MM_slash_dd_slash_yyyy_to_yyyyMMdd(row.date)),
-                    padSpaceToTheLeft(row.close),
-                    padSpaceToTheLeft(row.volume.replaceAll(",", "")),
-                    padSpaceToTheRight(row.myopen),
-                    padSpaceToTheRight(row.high),
-                    padSpaceToTheRight(row.low)
-            ));
+            stockHistory.add(
+                    toCsvRow(
+                            nasdaqApiResponseDTO.data.symbol,
+                            convert_from_MM_slash_dd_slash_yyyy_to_yyyyMMdd(row.date),
+                            row.close,
+                            row.volume.replaceAll(",", ""),
+                            row.myopen,
+                            row.high,
+                            row.low
+                    )
+            );
         }
         return GetStockHistoryResponseDTO.builder().stockHistoryCsv_ticker_date_close_vol_open_high_low(stockHistory).build();
     }
 
-    public static List<StockHistoryDAO> convert(GetStockHistoryResponseDTO getStockHistoryResponseDTO) {
+    public static GetStockHistoryResponseDTO from(List<StockHistoryDAO> stockHistoryDAOList){
+        List<String> ticker_date_close_vol_open_high_low = new ArrayList<>();
+        for(StockHistoryDAO stockHistoryDAO : stockHistoryDAOList){
+            ticker_date_close_vol_open_high_low.add(toCsvRow(
+                    stockHistoryDAO.getStockTicker(),
+                    stockHistoryDAO.getDate(),
+                    stockHistoryDAO.getClose().toString(),
+                    stockHistoryDAO.getVolume().toString(),
+                    stockHistoryDAO.getOpen().toString(),
+                    stockHistoryDAO.getHigh().toString(),
+                    stockHistoryDAO.getLow().toString()
+            ));
+        }
+        return GetStockHistoryResponseDTO.builder().stockHistoryCsv_ticker_date_close_vol_open_high_low(ticker_date_close_vol_open_high_low).build();
+    }
+
+    public static List<StockHistoryDAO> from(GetStockHistoryResponseDTO getStockHistoryResponseDTO) {
         List<StockHistoryDAO> ret = new ArrayList<>();
         for (String rowInCsv : getStockHistoryResponseDTO.getStockHistoryCsv_ticker_date_close_vol_open_high_low()) {
             String[] date_close_vol_open_high_low = rowInCsv.split(",");

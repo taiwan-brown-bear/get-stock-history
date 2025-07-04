@@ -18,11 +18,16 @@ public class GetStockHistoryService {
     private GetStockHistoryRepository getStockHistoryRepository;
 
     public void save(GetStockHistoryResponseDTO getStockHistoryResponseDTO) {
-        List<StockHistoryDAO> stockHistoryDAOList = FormatUtils.convert(getStockHistoryResponseDTO);
+        List<StockHistoryDAO> stockHistoryDAOList = FormatUtils.from(getStockHistoryResponseDTO);
         try {
             getStockHistoryRepository.saveAll(stockHistoryDAOList);
         } catch (Exception e) {
             log.info("Failed to save all due to {}", e.getCause(), e);
         }
+    }
+
+    public List<StockHistoryDAO> find(String fromDate, String toDate, String stockTicker) {
+        return getStockHistoryRepository.findByDateBetweenAndStockTicker(fromDate, toDate, stockTicker);
+        //return getStockHistoryRepository.findByDateBetweenAndStockTickerOrderByDateDesc(fromDate, toDate, stockTicker);
     }
 }
