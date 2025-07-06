@@ -4,7 +4,7 @@
 
     request #1:
 
-    curl --location --request GET 'http://localhost:8080/get/stock-history' \
+    curl --location --request GET 'http://localhost:8080/stock-history' \
     --header 'Content-Type: application/json' \
     --data '{
         "stockTicker": "QQQ",
@@ -28,7 +28,7 @@
 
     request #2:
 
-    curl --location --request GET 'http://localhost:8080/get/stock-history' \
+    curl --location --request GET 'http://localhost:8080/stock-history' \
     --header 'Content-Type: application/json' \
     --data '{
         "stockTicker": "QQQ",
