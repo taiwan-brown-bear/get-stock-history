@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/get/stock-history")
+@RequestMapping("/stock-history")
 public class GetStockHistoryController {
 
     @Autowired
