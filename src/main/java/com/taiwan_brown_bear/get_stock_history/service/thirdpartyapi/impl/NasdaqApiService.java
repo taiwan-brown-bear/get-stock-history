@@ -22,7 +22,7 @@ public class NasdaqApiService implements ThirdPartyApiService {
                 "/api/quote/%s/historical?assetclass=etf&fromdate=%s&limit=9999&todate=%s&random=46",
                 stockTicker,
                 FormatUtils.convert_from_yyyyMMdd_to_yyyy_dash_MM_dash_dd(fromDate),
-                FormatUtils.convert_from_yyyyMMdd_to_yyyy_dash_MM_dash_dd(toDate));// e.g., "/api/quote/QQQ/historical?assetclass=etf&fromdate=2025-05-28&limit=9999&todate=2025-06-28&random=46"
+                FormatUtils.convert_from_yyyyMMdd_to_yyyy_dash_MM_dash_dd(toDate));
 
         NasdaqApiResponseDTO nasdaqApiResponseDTO = restClient.get()
                 .uri(uri)
