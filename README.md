@@ -2,7 +2,7 @@
 
     -----------------------------------------------------------------------------------------------
 
-    request #1:
+    request #1: (with "source" specified, will try to get it from nasdap.com)
 
     curl --location --request GET 'http://localhost:8080/stock-history' \
     --header 'Content-Type: application/json' \
@@ -26,7 +26,7 @@
 
     -----------------------------------------------------------------------------------------------
 
-    request #2:
+    request #2: (without "source" specified, will get it from db)
 
     curl --location --request GET 'http://localhost:8080/stock-history' \
     --header 'Content-Type: application/json' \
