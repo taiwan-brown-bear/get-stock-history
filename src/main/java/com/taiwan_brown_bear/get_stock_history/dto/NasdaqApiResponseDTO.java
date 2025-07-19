@@ -57,3 +57,7 @@ public class NasdaqApiResponseDTO {// TODO: Note: Computer Generated Code. I jus
         public ArrayList<Row> rows;
     }
 }
+
+
+
+

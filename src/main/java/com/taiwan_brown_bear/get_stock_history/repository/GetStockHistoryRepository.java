@@ -10,3 +10,6 @@ public interface GetStockHistoryRepository extends CrudRepository<StockHistoryDA
     List<StockHistoryDAO> findByDateBetweenAndStockTickerOrderByDateDesc(String fromDate, String toDate, String stockTicker);
 
 }
+
+
+

@@ -117,15 +117,22 @@ public class FormatUtils {
             StockHistoryDAO stockHistoryDAO = StockHistoryDAO.builder()
                     .stockTicker(ticker)
                     .date       (date)
-                    .close      (Double.parseDouble(close))
-                    .volume     (Double.parseDouble(vol  ))
-                    .open       (Double.parseDouble(open ))
-                    .high       (Double.parseDouble(high ))
-                    .low        (Double.parseDouble(low  ))
+                    .close      (Double.parseDouble(removeLeadingDollarSignIfPresent(close)))
+                    .volume     (Double.parseDouble(removeLeadingDollarSignIfPresent(vol  )))
+                    .open       (Double.parseDouble(removeLeadingDollarSignIfPresent(open )))
+                    .high       (Double.parseDouble(removeLeadingDollarSignIfPresent(high )))
+                    .low        (Double.parseDouble(removeLeadingDollarSignIfPresent(low  )))
                     .build();
             ret.add(stockHistoryDAO);
         }
         return ret;
+    }
+
+    public static String removeLeadingDollarSignIfPresent(String price){
+        if(price.startsWith("$")){
+            return price.substring(1);
+        }
+        return price;
     }
 
     public static String padSpaceToTheRight(String originalString){
@@ -142,3 +149,6 @@ public class FormatUtils {
         return paddedLeft;
     }
 }
+
+
+

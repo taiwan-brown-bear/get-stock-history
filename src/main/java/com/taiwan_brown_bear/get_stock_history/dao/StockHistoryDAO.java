@@ -36,3 +36,6 @@ public class StockHistoryDAO {
     @Column(nullable = false)
     private Instant lastModified;
 }
+
+
+
