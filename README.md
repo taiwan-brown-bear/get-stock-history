@@ -1,4 +1,4 @@
-Step 1: Add the following MCP related dependency.
+Step 1: Add the following dependency for MCP server.
 
 	    <properties>
 		    <java.version>24</java.version>
@@ -22,7 +22,7 @@ Step 1: Add the following MCP related dependency.
     +		</dependencies>
     +	</dependencyManagement>
 
-Step 2: In order to modify the web service to MCP server. The following are added to application.properties.
+Step 2: In order to modify the web service to MCP server. The following configurations are added to application.properties.
 
     spring.ai.mcp.server.type=SYNC
     spring.ai.mcp.server.name=get-stock-history-mcp-server
