@@ -69,3 +69,46 @@ Step 2:
     }
 
     -----------------------------------------------------------------------------------------------
+
+# Troubleshooting:
+
+Q: In case you use lombok. When "mvn clean install", if getting Symbol Not Found error about lombok, add the following.
+A: After adding the following, the error goes away.
+
+                   <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+    +                       <scope>provided</scope>
+                            <optional>true</optional>
+                    </dependency>
+                    <dependency>
+    @@ -97,6 +98,30 @@
+                                    <groupId>org.springframework.boot</groupId>
+                                    <artifactId>spring-boot-maven-plugin</artifactId>
+                           </plugin>
+    +                       <plugin>
+    +                               <groupId>org.apache.maven.plugins</groupId>
+    +                               <artifactId>maven-compiler-plugin</artifactId>
+    +                               <configuration>
+    +                                       <annotationProcessorPaths>
+    +                                               <path>
+    +                                                       <groupId>org.projectlombok</groupId>
+    +                                                       <artifactId>lombok</artifactId>
+    +                                               </path>
+    +                                       </annotationProcessorPaths>
+    +                               </configuration>
+    +                       </plugin>
+    +                       <plugin>
+    +                               <groupId>org.springframework.boot</groupId>
+    +                               <artifactId>spring-boot-maven-plugin</artifactId>
+    +                               <configuration>
+    +                                       <excludes>
+    +                                               <exclude>
+    +                                                       <groupId>org.projectlombok</groupId>
+    +                                                       <artifactId>lombok</artifactId>
+    +                                               </exclude>
+    +                                       </excludes>
+    +                               </configuration>
+    +                       </plugin>
+                    </plugins>
+            </build>
