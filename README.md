@@ -1,3 +1,19 @@
+Step 1: In order to modify the web service to MCP server. The following are added to application.properties.
+
+    spring.ai.mcp.server.type=SYNC
+    spring.ai.mcp.server.name=get-stock-history-mcp-server
+    spring.ai.mcp.server.version=1.0.0
+
+    spring.main.web-application-type=none
+    spring.main.banner-mode=off
+    logging.pattern.console=
+
+    logging.file.name=get-stock-history.log
+
+Step 2: 
+
+
+-------
 
 # Note: The following 2 REST APIs below are disabled since web application type is set to "none" now in application.properties
 
