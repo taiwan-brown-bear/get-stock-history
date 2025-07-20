@@ -12,7 +12,9 @@ In this MCP Server, the following tools will be provided for Claude Desktop / Cl
 
 ----
 
-Step 1/3: Add the following dependency for MCP server.
+# 4 Steps To Implement The MCP Server:
+
+Step 1/4: Add the following dependency for MCP server.
 
 	    <properties>
 		    <java.version>24</java.version>
@@ -36,7 +38,7 @@ Step 1/3: Add the following dependency for MCP server.
     +		</dependencies>
     +	</dependencyManagement>
 
-Step 2/3: In order to modify the web service to MCP server. The following configurations are added to application.properties.
+Step 2/4: In order to modify the web service to MCP server. The following configurations are added to application.properties.
 
     spring.ai.mcp.server.type=SYNC
     spring.ai.mcp.server.name=get-stock-history-mcp-server
@@ -48,7 +50,9 @@ Step 2/3: In order to modify the web service to MCP server. The following config
 
     logging.file.name=get-stock-history.log
 
-Step 3/3: Once implementing the MCP Server, we need to add the command to start MCP Server to claude_desktop_config.json. (Note: we use Claude Desktop for MCP Client here)
+Step 3/4: create the tools in BuySellStockService.java & make the tools available to MCP Client through GetStockHistoryApplication.java.
+
+Step 4/4: Once implementing the MCP Server, we need to add the command to start MCP Server to claude_desktop_config.json. (Note: we use Claude Desktop for MCP Client here)
 
     {
       "mcpServers": {
