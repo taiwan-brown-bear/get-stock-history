@@ -41,8 +41,8 @@ Step 3: Once implementing the MCP Server, we need to add the command to start MC
         "get-stock-history-server": {
           "command": "java",
           "args": [
-	    "-jar",
-	    "/Users/charles/IdeaProjects/get-stock-history/target/get-stock-history-0.0.1-SNAPSHOT.jar"
+	        "-jar",
+	        "/Users/charles/IdeaProjects/get-stock-history/target/get-stock-history-0.0.1-SNAPSHOT.jar"
           ]
         }
       }
