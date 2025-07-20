@@ -153,10 +153,10 @@ A: The log will be writen to get-stock-history.log.
 
 For example,
 
-    java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.iterator()" because "nasdaqApiResponseDTO.data.tradesTable.rows" is null
-	at com.taiwan_brown_bear.get_stock_history.util.FormatUtils.from(FormatUtils.java:74) ~[classes/:na]
-	at com.taiwan_brown_bear.get_stock_history.service.thirdpartyapi.impl.NasdaqApiService.getHistorialQuoteDataForStock(NasdaqApiService.java:34) ~[classes/:na]
-	at com.taiwan_brown_bear.get_stock_history.controller.GetStockHistoryController.get(GetStockHistoryController.java:52) ~[classes/:na]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+        java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.iterator()" because "nasdaqApiResponseDTO.data.tradesTable.rows" is null
+	    at com.taiwan_brown_bear.get_stock_history.util.FormatUtils.from(FormatUtils.java:74) ~[classes/:na]
+	    at com.taiwan_brown_bear.get_stock_history.service.thirdpartyapi.impl.NasdaqApiService.getHistorialQuoteDataForStock(NasdaqApiService.java:34) ~[classes/:na]
+	    at com.taiwan_brown_bear.get_stock_history.controller.GetStockHistoryController.get(GetStockHistoryController.java:52) ~[classes/:na]
+	    at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	    at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
 
