@@ -11,7 +11,3 @@ public class GetStockHistoryResponseDTO {
     private List<String> stockHistoryCsv_ticker_date_close_vol_open_high_low;
     private String note;// TODO: for now, just put some note to debugging purpose ...
 }
-
-
-
-

@@ -10,6 +10,3 @@ public class GetStockHistoryRequestDTO {
     private String toDate;//   expecting that the date will look like "20250628"
 }
 
-
-
-
