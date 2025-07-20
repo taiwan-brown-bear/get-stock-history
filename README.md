@@ -1,4 +1,4 @@
-Step 1: Add the following dependency for MCP server.
+Step 1/3: Add the following dependency for MCP server.
 
 	    <properties>
 		    <java.version>24</java.version>
@@ -22,7 +22,7 @@ Step 1: Add the following dependency for MCP server.
     +		</dependencies>
     +	</dependencyManagement>
 
-Step 2: In order to modify the web service to MCP server. The following configurations are added to application.properties.
+Step 2/3: In order to modify the web service to MCP server. The following configurations are added to application.properties.
 
     spring.ai.mcp.server.type=SYNC
     spring.ai.mcp.server.name=get-stock-history-mcp-server
@@ -34,7 +34,7 @@ Step 2: In order to modify the web service to MCP server. The following configur
 
     logging.file.name=get-stock-history.log
 
-Step 3: Once implementing the MCP Server, we need to add the command to start MCP Server to claude_desktop_config.json. (Note: we use Claude Desktop for MCP Client here)
+Step 3/3: Once implementing the MCP Server, we need to add the command to start MCP Server to claude_desktop_config.json. (Note: we use Claude Desktop for MCP Client here)
 
     {
       "mcpServers": {
