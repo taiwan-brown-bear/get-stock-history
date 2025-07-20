@@ -34,8 +34,19 @@ Step 2: In order to modify the web service to MCP server. The following configur
 
     logging.file.name=get-stock-history.log
 
-Step 2: 
+Step 3: Once implementing the MCP Server, we need to add the command to start MCP Server to claude_desktop_config.json. (Note: we use Claude Desktop for MCP Client here)
 
+    {
+      "mcpServers": {
+        "get-stock-history-server": {
+          "command": "java",
+          "args": [
+	    "-jar",
+	    "/Users/charles/IdeaProjects/get-stock-history/target/get-stock-history-0.0.1-SNAPSHOT.jar"
+          ]
+        }
+      }
+    }
 
 -------
 
