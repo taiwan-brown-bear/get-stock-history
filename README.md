@@ -1,4 +1,28 @@
-Step 1: In order to modify the web service to MCP server. The following are added to application.properties.
+Step 1: Add the following MCP related dependency.
+
+	    <properties>
+		    <java.version>24</java.version>
+	+   	<spring-ai.version>1.0.0</spring-ai.version>
+	    </properties>
+
+    + 		<dependency>
+    +			<groupId>org.springframework.ai</groupId>
+    +			<artifactId>spring-ai-starter-mcp-server</artifactId>
+    +		</dependency>
+
+    +  	<dependencyManagement>
+    +		<dependencies>
+    +			<dependency>
+    +				<groupId>org.springframework.ai</groupId>
+    +				<artifactId>spring-ai-bom</artifactId>
+    +				<version>${spring-ai.version}</version>
+    +				<type>pom</type>
+    +				<scope>import</scope>
+    +			</dependency>
+    +		</dependencies>
+    +	</dependencyManagement>
+
+Step 2: In order to modify the web service to MCP server. The following are added to application.properties.
 
     spring.ai.mcp.server.type=SYNC
     spring.ai.mcp.server.name=get-stock-history-mcp-server
