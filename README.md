@@ -5,7 +5,7 @@ In this MCP Server, the following tools will be provided for Claude Desktop / Cl
     tool #1: tbb_getStockPrice   : get stock price from 3rd party (i.e., nasdaq.com)
     tool #2: tbb_buyStock        : buy  x shares of stock y (note: here, we just update the in memory storage, instead of making the real transaction.)
     tool #3: ttb_sellStocks      : sell x shares of stock y (note: here, we just update the in memory storage, instead of making the real transaction.)
-    tool #4: ttb_getStockHoldings: show the current holdings after buying/selling. e.g.,
+    tool #4: ttb_getStockHoldings: show the current holdings after buying/selling. e.g., Cluade Desktop could show the results as below.
 
         AAPL: 50 shares
         TSLA: 9 shares
