@@ -1,5 +1,6 @@
 
-# Note: The following 2 REST APIs are disabled since web application type is set to "none" now in application.properties
+# Note: The following 2 REST APIs below are disabled 
+since web application type is set to "none" now in application.properties
 
     spring.main.web-application-type=none
 
