@@ -178,3 +178,7 @@ For example,
 	    at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
 	    at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
 
+Alternatively, one could MCP Inspector to debug :)
+
+	% break install node
+ 	% npx @modelcontextprotocol/inspector java -jar ./target/get-stock-history-0.0.1-SNAPSHOT.jar
