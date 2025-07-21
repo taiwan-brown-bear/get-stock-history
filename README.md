@@ -9,9 +9,9 @@ In this MCP Server, the following tools will be provided for Claude Desktop / Cl
     e.g., Cluade Desktop could show the results 
     after 
           1. buying 100 shares of AAPL and 
-	  2. 10 shares of TSLA followed by 
+          2. 10 shares of TSLA followed by 
           3. selling 50 shares of AAPL and 
-	  4. 1 share of TSLA.
+          4. 1 share of TSLA.
 
         AAPL: 50 shares
         TSLA: 9 shares
