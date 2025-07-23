@@ -1,3 +1,83 @@
+# Summary:
+
+In this MCP Server, the following tools will be provided for Claude Desktop / Claude Sonnet 4.
+
+    tool #1: tbb_getStockPrice   : get stock price from 3rd party (i.e., nasdaq.com)
+    tool #2: tbb_buyStock        : buy  x shares of stock y (note: here, we just update the in memory storage, instead of making the real transaction.)
+    tool #3: ttb_sellStocks      : sell x shares of stock y (note: here, we just update the in memory storage, instead of making the real transaction.)
+    tool #4: ttb_getStockHoldings: show the current holdings after buying/selling. 
+    e.g., Cluade Desktop could show the results 
+    after 
+          1. buying 100 shares of AAPL and 
+          2. 10 shares of TSLA followed by 
+          3. selling 50 shares of AAPL and 
+          4. 1 share of TSLA.
+
+        AAPL: 50 shares
+        TSLA: 9 shares
+
+----
+
+# 4 Steps To Implement The MCP Server:
+
+Step 1/4: Add the following dependency for MCP server.
+
+	    <properties>
+		    <java.version>24</java.version>
+	+   	<spring-ai.version>1.0.0</spring-ai.version>
+	    </properties>
+
+    + 		<dependency>
+    +			<groupId>org.springframework.ai</groupId>
+    +			<artifactId>spring-ai-starter-mcp-server</artifactId>
+    +		</dependency>
+
+    +  	<dependencyManagement>
+    +		<dependencies>
+    +			<dependency>
+    +				<groupId>org.springframework.ai</groupId>
+    +				<artifactId>spring-ai-bom</artifactId>
+    +				<version>${spring-ai.version}</version>
+    +				<type>pom</type>
+    +				<scope>import</scope>
+    +			</dependency>
+    +		</dependencies>
+    +	</dependencyManagement>
+
+Step 2/4: In order to modify the web service to MCP server. The following configurations are added to application.properties.
+
+    spring.ai.mcp.server.type=SYNC
+    spring.ai.mcp.server.name=get-stock-history-mcp-server
+    spring.ai.mcp.server.version=1.0.0
+
+    spring.main.web-application-type=none
+    spring.main.banner-mode=off
+    logging.pattern.console=
+
+    logging.file.name=get-stock-history.log
+
+Step 3/4: create the tools in BuySellStockService.java & make the tools available to MCP Client through GetStockHistoryApplication.java.
+
+Step 4/4: Once implementing the MCP Server, we need to add the command to start MCP Server to claude_desktop_config.json. (Note: we use Claude Desktop for MCP Client here)
+
+    {
+      "mcpServers": {
+        "get-stock-history-server": {
+          "command": "java",
+          "args": [
+	        "-jar",
+	        "/Users/charles/IdeaProjects/get-stock-history/target/get-stock-history-0.0.1-SNAPSHOT.jar"
+          ]
+        }
+      }
+    }
+
+-------
+
+# Note: The following 2 REST APIs below are disabled since web application type is set to "none" now in application.properties
+
+    spring.main.web-application-type=none
+
 # 2 Avaiable APIs:
 
     -----------------------------------------------------------------------------------------------
@@ -48,3 +128,63 @@
     }
 
     -----------------------------------------------------------------------------------------------
+
+# Troubleshooting:
+
+Q: In case you use lombok. When "mvn clean install", if getting Symbol Not Found error about lombok, add the following.
+A: After adding the following, the error goes away.
+
+                   <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+    +                       <scope>provided</scope>
+                            <optional>true</optional>
+                    </dependency>
+                    <dependency>
+    @@ -97,6 +98,30 @@
+                                    <groupId>org.springframework.boot</groupId>
+                                    <artifactId>spring-boot-maven-plugin</artifactId>
+                           </plugin>
+    +                       <plugin>
+    +                               <groupId>org.apache.maven.plugins</groupId>
+    +                               <artifactId>maven-compiler-plugin</artifactId>
+    +                               <configuration>
+    +                                       <annotationProcessorPaths>
+    +                                               <path>
+    +                                                       <groupId>org.projectlombok</groupId>
+    +                                                       <artifactId>lombok</artifactId>
+    +                                               </path>
+    +                                       </annotationProcessorPaths>
+    +                               </configuration>
+    +                       </plugin>
+    +                       <plugin>
+    +                               <groupId>org.springframework.boot</groupId>
+    +                               <artifactId>spring-boot-maven-plugin</artifactId>
+    +                               <configuration>
+    +                                       <excludes>
+    +                                               <exclude>
+    +                                                       <groupId>org.projectlombok</groupId>
+    +                                                       <artifactId>lombok</artifactId>
+    +                                               </exclude>
+    +                                       </excludes>
+    +                               </configuration>
+    +                       </plugin>
+                    </plugins>
+            </build>
+
+Q: When MCP Client runnning the tool provided by MCP Server, if things go south, where can we start the debugging ?
+A: The log will be writen to get-stock-history.log.
+
+For example,
+
+        java.lang.NullPointerException: Cannot invoke "java.util.ArrayList.iterator()" because "nasdaqApiResponseDTO.data.tradesTable.rows" is null
+	    at com.taiwan_brown_bear.get_stock_history.util.FormatUtils.from(FormatUtils.java:74) ~[classes/:na]
+	    at com.taiwan_brown_bear.get_stock_history.service.thirdpartyapi.impl.NasdaqApiService.getHistorialQuoteDataForStock(NasdaqApiService.java:34) ~[classes/:na]
+	    at com.taiwan_brown_bear.get_stock_history.controller.GetStockHistoryController.get(GetStockHistoryController.java:52) ~[classes/:na]
+	    at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	    at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+
+Alternatively, one could MCP Inspector to debug :)
+
+	% break install node
+ 	% npx @modelcontextprotocol/inspector java -jar ./target/get-stock-history-0.0.1-SNAPSHOT.jar
