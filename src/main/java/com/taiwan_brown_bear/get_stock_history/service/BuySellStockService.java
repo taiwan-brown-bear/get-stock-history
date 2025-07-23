@@ -20,7 +20,10 @@ public class BuySellStockService {
     description = "ask for share price of stock. Specify stockTicker and date")
     public String getStockPrice(String stockTicker, String date_in_format_of_yyyyMMdd){
         GetStockHistoryResponseDTO getStockHistoryResponseDTO =
-                nasdaqApiService.getHistorialQuoteDataForStock(stockTicker, date_in_format_of_yyyyMMdd, String.valueOf(Integer.parseInt(date_in_format_of_yyyyMMdd) + 1));
+                nasdaqApiService.getHistorialQuoteDataForStock(
+                        stockTicker,
+                        date_in_format_of_yyyyMMdd, // FROM (inclusive)
+                        date_in_format_of_yyyyMMdd);// TO (inclusive)
         List<String> records = getStockHistoryResponseDTO.getStockHistoryCsv_ticker_date_close_vol_open_high_low();
         if(records != null && records.size() > 0){
             return records.get(0);
